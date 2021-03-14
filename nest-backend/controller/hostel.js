@@ -135,7 +135,7 @@ exports.add_hostel = async (req, res) => {
 
 exports.update_hostel = async (req, res) => {
     try {
-       
+
     } catch (err) {
         return res.json({ error: 'Please fill the required fields!' })
     }
@@ -181,6 +181,8 @@ exports.applyFilter = async (req, res) => {
     const type = req.body.type ? req.body.type : '';
     const bed = req.body.bed ? req.body.bed : '';
     const ac = req.body.ac ? req.body.ac : '';
+    const minPrice = req.body.min ? req.body.min : 0;
+    const maxPrice = req.body.max ? req.body.max : 100000;
 
     let filter = {};
 
@@ -188,14 +190,19 @@ exports.applyFilter = async (req, res) => {
     if (bed) filter.bed = bed;
     if (ac) filter.ac = ac;
 
+    filter.price ={
+        $gte: minPrice,
+        $lte: maxPrice
+    }
+
+    console.log(filter);
+
     const regexCity = { $regex: cityName, $options: 'i' };
     const cityDetails = await City.find({ cityName: regexCity });
 
     filter.cityName = cityDetails[0]._id;
 
     const hostels = await Hostel.find(filter);
-
-    console.log(cityDetails[0].cityName);
 
     res.json({
         city: cityDetails[0].cityName,

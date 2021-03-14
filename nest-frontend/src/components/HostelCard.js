@@ -19,6 +19,7 @@ export const HostelCard = ({ pgs }) => {
                                 <p className="card-p  mt-2">{pg.type}</p>
                                 <p className="card-p  mt-2">{pg.bed}</p>
                                 <p className="card-p  mt-2">{pg.ac}</p>
+                                <p className="card-p  mt-2">₹{pg.price}</p>
                             </Fragment>
 
                         </div>

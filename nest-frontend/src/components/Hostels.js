@@ -5,17 +5,21 @@ import { Type } from '../filterComponents/Type';
 import { Bed } from '../filterComponents/Bed';
 import { AC } from '../filterComponents/AC';
 import { HostelCard } from './HostelCard';
+import { Price } from '../filterComponents/Price';
 
 export const Hostels = (props) => {
     const [pgs, setPgs] = useState('');
     const [type, setType] = useState('');
     const [bed, setBed] = useState('');
     const [ac, setAc] = useState('');
+    const [price, setPrice] = useState({
+        min: '',
+        max: ''
+    });
     const [loading, setLoading] = useState(false)
 
     const queriedCity = props.location.search;
     const params = queryString.parse(queriedCity);
-    console.log(params);
 
     const hostelByCity = (city) => {
         const fetchableData = {
@@ -96,6 +100,30 @@ export const Hostels = (props) => {
         });
     }
 
+    const hostelByPrice = (type, bed, ac, price) => {
+        const fetchableData = {
+            type: type ? type : '',
+            bed: bed ? bed : '',
+            ac: ac ? ac : '',
+            min: price.min,
+            max: price.max,
+            cityName: params.cityName
+        }
+        return fetch(`http://localhost:5000/api/hostels/search`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(fetchableData)
+        }).then(res => {
+            console.log(res);
+            return res.json();
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+
     useEffect(() => {
         setLoading(true);
         if (!type || !bed || !ac) {
@@ -135,12 +163,22 @@ export const Hostels = (props) => {
         setLoading(true);
         hostelByAC(type, bed, ac).then(data => {
             setLoading(false);
-            console.log(data);
             setPgs(data);
         }).catch(err => {
             console.log(err);
         })
     }, [type, bed, ac]);
+
+    useEffect(() => {
+        setLoading(true);
+        hostelByPrice(type, bed, ac, price).then(data => {
+            setLoading(false);
+            console.log(data);
+            setPgs(data);
+        }).catch(err => {
+            console.log(err);
+        })
+    }, [type, bed, ac, price]);
 
     const handleType = e => {
         console.log(e.target.value);
@@ -165,11 +203,27 @@ export const Hostels = (props) => {
         }
     }
 
+    const handlePriceMin = e => {
+        console.log('min', e.target.value);
+        setPrice({
+            ...price,
+            min: e.target.value
+        });
+    }
+
+    const handlePriceMax = e => {
+        console.log('max', e.target.value);
+        setPrice({
+            ...price,
+            max: e.target.value
+        });
+    }
+
     const showLoading = () => {
         if (loading) {
             return (
                 <div className="d-flex justify-content-center">
-                    <div className="spinner-border" role="status">
+                    <div className="spinner-border text-warning" role="status">
                         <span className="visually-hidden">Loading...</span>
                     </div>
                 </div>
@@ -193,9 +247,14 @@ export const Hostels = (props) => {
                         <div class="col-sm">
                             <AC handleAC={handleAC} />
                         </div>
+                        <div class="col-sm">
+                            <Price handlePriceMin={handlePriceMin}
+                                handlePriceMax={handlePriceMax}
+                            />
+                        </div>
                     </div>
                 </div>
-                <hr/><hr/>
+                <hr /><hr />
 
                 <div className="row">
                     <div className="col-4">

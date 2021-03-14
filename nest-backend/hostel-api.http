@@ -3,5 +3,6 @@
 
 {
     "cityName": "guwa",
-    "type": "Boys"
+    "type": "Girls",
+    "min": 2500
 }
