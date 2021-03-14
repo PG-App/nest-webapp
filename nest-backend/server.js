@@ -16,7 +16,7 @@ const hostelRoutes = require('./routes/hostel');
 const auth = require('./routes/auth');
 
 // const dbURI = 'mongodb://localhost/pg-app';
-const dbURI = 'mongodb+srv://amare:amare@mycluster.0e2la.gcp.mongodb.net/nest?retryWrites=true&w=majority';
+const dbURI = process.env.MONGODB_URI;
 
 mongoose.connect(dbURI, {
     useNewUrlParser: true,
