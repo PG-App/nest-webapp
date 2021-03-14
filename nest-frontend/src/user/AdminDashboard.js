@@ -9,25 +9,34 @@ const AdminDashboard = () => {
 
     const adminLinks = () => {
         return (
-            <div className="card">
-                <h4 className="card-header">Admin Links</h4>
-                <ul className="list-group">
-                    <li className="list-group-item">
-                        <Link className="nav-link" to="/create/hostel">
-                            Create Hostel
+            <div className="mb5">
+                <div className="card">
+                    <h4 className="card-header">Admin Links</h4>
+                    <ul className="list-group">
+
+                        <li className="list-group-item">
+                            <Link className="nav-link" to="/create/city">
+                                Create City
                         </Link>
-                    </li>
-                    <li className="list-group-item">
-                        <Link className="nav-link" to="/admin/hostels">
-                            View Hostels
+                        </li>
+
+                        <li className="list-group-item">
+                            <Link className="nav-link" to="/create/hostel">
+                                Create Hostel
                         </Link>
-                    </li>
-                    <li className="list-group-item">
-                        <Link className="nav-link" to="/admin/orders">
-                            Manage Hostels
+                        </li>
+                        <li className="list-group-item">
+                            <Link className="nav-link" to="/admin/hostels">
+                                View Hostels
                         </Link>
-                    </li>
-                </ul>
+                        </li>
+                        <li className="list-group-item">
+                            <Link className="nav-link" to="/admin/orders">
+                                Manage Hostels
+                        </Link>
+                        </li>
+                    </ul>
+                </div>
             </div>
         );
     };

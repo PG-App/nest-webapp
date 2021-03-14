@@ -7,10 +7,9 @@ exports.create_hostel_get = (req, res) => {
     res.render('add-hostel');
 }
 
-exports.get_all_hostels = async (req, res) => {
-    const hostels = await Hostel.find().populate('cityName');
-    // console.log(hostels);
-    res.json({ hostels });
+exports.get_all_cities = async (req, res) => {
+    const cities = await City.find().select('_id cityName');
+    res.json({ cities });
 }
 
 exports.create_hostel_post = (req, res) => {
@@ -106,33 +105,40 @@ exports.add_city = async (req, res) => {
 }
 
 exports.add_hostel = async (req, res) => {
-    const cityID = req.params.cityID;
-    const { hostelName, type, bed, ac, price, pincode } = req.body;
+    try {
+        const cityID = req.params.cityID;
+        const { hostelName, type, bed, ac, price, pincode } = req.body;
 
-    const cityDetails = await City.findById(cityID);
-    // console.log(cityDetails);
-    // res.send('ok');
+        const cityDetails = await City.findById(cityID);
 
-    const newHostel = await new Hostel({
-        cityName: cityID,
-        hostelName,
-        type,
-        pincode,
-        bed,
-        ac,
-        price,
-        pincode
-    }).save();
+        const newHostel = await new Hostel({
+            cityName: cityID,
+            hostelName,
+            type,
+            pincode,
+            bed,
+            ac,
+            price
+        }).save();
 
-    // console.log(newHostel);
+        if (newHostel) {
+            cityDetails.hostel.push(newHostel);
+        }
 
-    if (newHostel) {
-        cityDetails.hostel.push(newHostel);
+        await cityDetails.save();
+
+        res.json({ success: 'Hostel created successfully' });
+    } catch (err) {
+        return res.json({ error: 'Please fill the required fields!' })
     }
+}
 
-    await cityDetails.save();
-
-    res.send('Hostel created successfully');
+exports.update_hostel = async (req, res) => {
+    try {
+       
+    } catch (err) {
+        return res.json({ error: 'Please fill the required fields!' })
+    }
 }
 
 exports.searchHostelByCity = async (req, res) => {
@@ -178,9 +184,9 @@ exports.applyFilter = async (req, res) => {
 
     let filter = {};
 
-    if(type) filter.type = type;
-    if(bed) filter.bed = bed;
-    if(ac) filter.ac = ac;
+    if (type) filter.type = type;
+    if (bed) filter.bed = bed;
+    if (ac) filter.ac = ac;
 
     const regexCity = { $regex: cityName, $options: 'i' };
     const cityDetails = await City.find({ cityName: regexCity });

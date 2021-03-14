@@ -11,6 +11,7 @@ export const Hostels = (props) => {
     const [type, setType] = useState('');
     const [bed, setBed] = useState('');
     const [ac, setAc] = useState('');
+    const [loading, setLoading] = useState(false)
 
     const queriedCity = props.location.search;
     const params = queryString.parse(queriedCity);
@@ -96,8 +97,10 @@ export const Hostels = (props) => {
     }
 
     useEffect(() => {
+        setLoading(true);
         if (!type || !bed || !ac) {
             hostelByCity(params.cityName).then(data => {
+                setLoading(false);
                 console.log(data);
                 setPgs(data.hostels);
             }).catch(err => {
@@ -107,7 +110,9 @@ export const Hostels = (props) => {
     }, []);
 
     useEffect(() => {
+        setLoading(true);
         hostelByType(type, bed).then(data => {
+            setLoading(false);
             console.log(data);
             setPgs(data);
         }).catch(err => {
@@ -116,7 +121,9 @@ export const Hostels = (props) => {
     }, [type, bed]);
 
     useEffect(() => {
+        setLoading(true);
         hostelByBed(type, bed).then(data => {
+            setLoading(false);
             console.log(data);
             setPgs(data);
         }).catch(err => {
@@ -125,7 +132,9 @@ export const Hostels = (props) => {
     }, [type, bed]);
 
     useEffect(() => {
+        setLoading(true);
         hostelByAC(type, bed, ac).then(data => {
+            setLoading(false);
             console.log(data);
             setPgs(data);
         }).catch(err => {
@@ -156,10 +165,23 @@ export const Hostels = (props) => {
         }
     }
 
+    const showLoading = () => {
+        if (loading) {
+            return (
+                <div className="d-flex justify-content-center">
+                    <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            )
+        }
+    };
+
     return (
         <Fragment>
             <div className="container">
                 <h3>Hostels page nest</h3>
+                {showLoading()}
                 <div class="container">
                     <div class="row">
                         <div class="col-sm">
@@ -173,6 +195,7 @@ export const Hostels = (props) => {
                         </div>
                     </div>
                 </div>
+                <hr/><hr/>
 
                 <div className="row">
                     <div className="col-4">

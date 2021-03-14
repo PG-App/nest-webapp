@@ -11,7 +11,8 @@ const HostelSchema = mongoose.Schema({
     pincode: { type: Number, required: true },
     bed: { type: String, required: true },
     ac: { type: String, default: 'Non-AC' },
-    price: { type: Number, required: true }
+    price: { type: Number, required: true },
+    images: [{ type: String }]
 });
 
 module.exports = mongoose.model('hostel', HostelSchema);

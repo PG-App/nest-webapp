@@ -17,20 +17,20 @@
 # Content-Type: application/json
 
 # {
-#     "cityName": "Ahmedabad"
+#     "cityName": "Dibrugarh"
 # }
 
-# POST  http://localhost:5000/api/add/hostel/6031245068a86842f86af347
-# Content-Type: application/json
+POST  http://localhost:5000/api/add/hostel/604dd788694516c3e0d8af4a
+Content-Type: application/json
 
-# {
-#     "hostelName": "Abhimanyu PG",
-#     "type": "Girls",
-#     "bed": "Triple",
-#     "ac":"Non-AC",
-#     "price": 5000,
-#     "pincode": 788101
-# }
+{
+    "hostelName": "Pratik Nilesh PG",
+    "type": "Girls",
+    "bed": "Single",
+    "ac":"Non-AC",
+    "price": 5000,
+    "pincode": 788101
+}
 
 
 # USER SIGN IN
