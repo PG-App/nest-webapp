@@ -1,0 +1,13 @@
+body {
+    background-color: rgb(110, 196, 247);
+}
+
+#btn_search {
+    text-decoration: none;
+    color: rgb(65, 23, 4);
+}
+
+.card {
+    display: inline-block;
+    margin-left: 10px;
+}
