@@ -9,6 +9,7 @@ export const Home = () => {
     const [pgs, setPgs] = useState([]);
     const [query, setQuery] = useState('');
     const [value, setValue] = useState(null);
+    const [pgSize, setPgSize] = useState(0);
 
     const handleChange = e => {
         setQuery(e.target.value);
@@ -22,10 +23,11 @@ export const Home = () => {
     }
 
     const fetchAllHostels = () => {
-        axios.get(`http://localhost:5000/api/get/all/hostels`)
+        axios.get(`http://localhost:5000/api/get/all/pgs`)
             .then(res => {
-                console.log(res.data.hostels);
-                setPgs(res.data.hostels);
+                console.log(res.data);
+                setPgSize(res.data.size);
+                setPgs(res.data.pgs);
             });
     }
 
@@ -59,8 +61,11 @@ export const Home = () => {
         <Fragment>
             <div className="container">
                 <h3>Home page nest</h3>
+                <h5>
+                    {pgSize}
+                </h5>
                 {JSON.stringify(pgs)}
-                <hr/>
+                <hr />
                 <Search query={query} handleChange={handleChange} city={handleCitySearch} />
             </div>
         </Fragment>

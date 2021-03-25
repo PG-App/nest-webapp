@@ -9,6 +9,7 @@ import { Price } from '../filterComponents/Price';
 
 export const Hostels = (props) => {
     const [pgs, setPgs] = useState('');
+    const [pgSize, setPgSize] = useState(0);
     const [data, setData] = useState('');
     const [type, setType] = useState('');
     const [bed, setBed] = useState('');
@@ -22,125 +23,106 @@ export const Hostels = (props) => {
     const queriedCity = props.location.search;
     // console.log(queriedCity);
     const params = queryString.parse(queriedCity);
+    console.log(params);
 
-    const fetchAllPgs = () => {
-        return fetch('http://localhost:5000/api/get/all/hostels', {
-            method: 'GET'
-        }).then(res => {
-            return res.json();
-        }).catch(err => console.log(err));
+    const fetchAllPgs = (location) => {
+        return fetch(`http://localhost:5000/api/pgs/search?location=${location}`)
+            .then(res => {
+                console.log(res);
+                return res.json();
+            }).catch(err => console.log(err));
     }
 
-    const hostelByCity = location => {
-        const fetchableData = {
-            location
-        }
-        return fetch(`http://localhost:5000/api/hostels/search`, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(fetchableData)
-        }).then(res => {
-            return res.json();
-        }).catch(err => {
-            console.log(err);
-        });
-    }
+    // const hostelByType = (type, bed) => {
+    //     const fetchableData = {
+    //         type,
+    //         bed: bed ? bed : '',
+    //         cityName: params.cityName
+    //     }
+    //     return fetch(`http://localhost:5000/api/hostels/search`, {
+    //         method: 'POST',
+    //         headers: {
+    //             Accept: 'application/json',
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(fetchableData)
+    //     }).then(res => {
+    //         return res.json();
+    //     }).catch(err => {
+    //         console.log(err);
+    //     });
+    // }
 
-    const hostelByType = (type, bed) => {
-        const fetchableData = {
-            type,
-            bed: bed ? bed : '',
-            cityName: params.cityName
-        }
-        return fetch(`http://localhost:5000/api/hostels/search`, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(fetchableData)
-        }).then(res => {
-            return res.json();
-        }).catch(err => {
-            console.log(err);
-        });
-    }
+    // const hostelByBed = (type, bed) => {
+    //     const fetchableData = {
+    //         type: type ? type : '',
+    //         bed,
+    //         cityName: params.cityName
+    //     }
+    //     return fetch(`http://localhost:5000/api/hostels/search`, {
+    //         method: 'POST',
+    //         headers: {
+    //             Accept: 'application/json',
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(fetchableData)
+    //     }).then(res => {
+    //         return res.json();
+    //     }).catch(err => {
+    //         console.log(err);
+    //     });
+    // }
 
-    const hostelByBed = (type, bed) => {
-        const fetchableData = {
-            type: type ? type : '',
-            bed,
-            cityName: params.cityName
-        }
-        return fetch(`http://localhost:5000/api/hostels/search`, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(fetchableData)
-        }).then(res => {
-            return res.json();
-        }).catch(err => {
-            console.log(err);
-        });
-    }
+    // const hostelByAC = (type, bed, ac) => {
+    //     const fetchableData = {
+    //         type: type ? type : '',
+    //         bed: bed ? bed : '',
+    //         ac,
+    //         cityName: params.cityName
+    //     }
+    //     return fetch(`http://localhost:5000/api/hostels/search`, {
+    //         method: 'POST',
+    //         headers: {
+    //             Accept: 'application/json',
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(fetchableData)
+    //     }).then(res => {
+    //         return res.json();
+    //     }).catch(err => {
+    //         console.log(err);
+    //     });
+    // }
 
-    const hostelByAC = (type, bed, ac) => {
-        const fetchableData = {
-            type: type ? type : '',
-            bed: bed ? bed : '',
-            ac,
-            cityName: params.cityName
-        }
-        return fetch(`http://localhost:5000/api/hostels/search`, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(fetchableData)
-        }).then(res => {
-            return res.json();
-        }).catch(err => {
-            console.log(err);
-        });
-    }
-
-    const hostelByPrice = (type, bed, ac, price) => {
-        const fetchableData = {
-            type: type ? type : '',
-            bed: bed ? bed : '',
-            ac: ac ? ac : '',
-            min: price.min,
-            max: price.max,
-            cityName: params.cityName
-        }
-        return fetch(`http://localhost:5000/api/hostels/search`, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(fetchableData)
-        }).then(res => {
-            console.log(res);
-            return res.json();
-        }).catch(err => {
-            console.log(err);
-        });
-    }
+    // const hostelByPrice = (type, bed, ac, price) => {
+    //     const fetchableData = {
+    //         type: type ? type : '',
+    //         bed: bed ? bed : '',
+    //         ac: ac ? ac : '',
+    //         min: price.min,
+    //         max: price.max,
+    //         cityName: params.cityName
+    //     }
+    //     return fetch(`http://localhost:5000/api/hostels/search`, {
+    //         method: 'POST',
+    //         headers: {
+    //             Accept: 'application/json',
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(fetchableData)
+    //     }).then(res => {
+    //         console.log(res);
+    //         return res.json();
+    //     }).catch(err => {
+    //         console.log(err);
+    //     });
+    // }
 
     useEffect(() => {
-        hostelByCity(params.location).then(data => {
-            setPgs(data.pgs);
-        });
-
-        fetchAllPgs().then(data => {
-            setData(data.hostels);
+        fetchAllPgs(params.location).then(data => {
+            console.log(data);
+            setPgSize(data.size);
+            setData(data.pgs);
         });
     }, []);
 
@@ -263,21 +245,9 @@ export const Hostels = (props) => {
                 </div>
                 <hr className='new5' />
 
-                {JSON.stringify(pgs)}
+                <h4>{pgSize}</h4>
+                {JSON.stringify(data)}
 
-                {/* <div className="row">
-                    <div className="col-4">
-                        <h4>Related pgs</h4>
-                    </div>
-
-                    <div className="col-8">
-                        {pgs.size > 0 ?
-                            <HostelCard pgs={pgs} /> :
-                            <h2>No Pgs found!</h2>
-                        }
-                    </div>
-
-                </div> */}
             </div>
 
         </Fragment >

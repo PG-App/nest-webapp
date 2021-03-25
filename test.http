@@ -20,20 +20,15 @@
 #     "cityName": "Dibrugarh"
 # }
 
-# POST http://localhost:5000/api/add/hostel
+# POST http://localhost:5000/api/add/pg
 # Content-Type: application/json
 
 # {
-#     "name": "Pratik Bhargab Manab PG",
-#     "location": "Beltola, Guwahati, Assam, India"
+#     "name": "Manab and his wife's PG",
+#     "location": "Dibrugarh University, Dibrugarh, Assam, India"
 # }
 
-POST http://localhost:5000/api/hostels/search
-Content-Type: application/json
-
-{
-    "location": "Guwahati, Assam, India"
-}
+GET http://localhost:5000/api/pgs/search?location=Dibrugarh, Assam, India
 
 
 # USER SIGN IN

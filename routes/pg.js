@@ -5,7 +5,7 @@ const {  create_pg_post, search_pg_post, add_pg, getAllPgsByCity, applyFilter } 
 
 router.post('/add/pgs', create_pg_post);
 
-router.post('/pgs/search', search_pg_post);
+router.get('/pgs/search', search_pg_post);
 router.post('/pgs/search', applyFilter);
 
 router.post('/add/pg', add_pg);

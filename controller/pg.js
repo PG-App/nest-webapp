@@ -28,12 +28,13 @@ exports.create_pg_post = (req, res) => {
 
 exports.getAllPgsByCity = async (req, res) => {
     const pgs = await Pg.find().select('location');
-    res.json({ pgs });
+    res.json({ pgs, size: pgs.length });
 }
 
 exports.search_pg_post = async (req, res) => {
     try {
-        const { location } = req.body;
+        const { location } = req.query;
+        console.log(req.query);
         const filter = {
             "location": { $regex: `${location}`, $options: 'i' }
         };
@@ -41,7 +42,8 @@ exports.search_pg_post = async (req, res) => {
         res.status(200).json({
             success: true,
             message: `${pgs.length} pgs found for you!`,
-            pgs: pgs
+            pgs: pgs,
+            size: pgs.length
         });
     } catch (err) {
         console.log(err);
