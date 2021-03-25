@@ -1,0 +1,17 @@
+body {
+    background-color: rgb(136, 205, 245);
+}
+
+#btn_search {
+    text-decoration: none;
+    color: rgb(65, 23, 4);
+}
+
+.card {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+hr.new5 {
+    border: 2px solid rgb(224, 192, 5);
+}
