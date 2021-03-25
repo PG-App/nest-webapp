@@ -1,5 +1,5 @@
 const stripe = require('stripe')('sk_test_T0a4kiCJInFB1DjREcCAcg9l00GOHeag5g');
-// const stripe = require('stripe')('sk_test_51IXTCgSBer6yUtA8SRL72euCzb8EjTBv9vjqm6Kw3FlR0hvbULZMBMpSglg6bnENDTwbycsW2oU6Xog46JDhAa8S00PW3RxM4p')
+// const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 exports.postCharge = async (req, res) => {
     try {
