@@ -12,7 +12,7 @@ exports.postCharge = async (req, res) => {
             receipt_email
         })
 
-        if (!charge) throw new Error('charge unsuccessful')
+        if (!charge) throw new Error('charge unsuccessful');
 
         res.status(200).json({
             message: 'charge posted successfully',

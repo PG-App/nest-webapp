@@ -6,7 +6,7 @@ import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { Search } from './Search';
 
 export const Home = () => {
-    const [hostels, setHostels] = useState([]);
+    const [pgs, setPgs] = useState([]);
     const [query, setQuery] = useState('');
     const [value, setValue] = useState(null);
 
@@ -16,15 +16,16 @@ export const Home = () => {
 
     const handleCitySearch = () => {
         if (query.length === 0) {
-            return '/hostels?';
+            return '/pgs?';
         }
-        return `/hostels?cityName=${query}`
+        return `/pgs?cityName=${query}`
     }
 
     const fetchAllHostels = () => {
         axios.get(`http://localhost:5000/api/get/all/hostels`)
             .then(res => {
-                setHostels(res.data.hostels);
+                console.log(res.data.hostels);
+                setPgs(res.data.hostels);
             });
     }
 
@@ -58,18 +59,8 @@ export const Home = () => {
         <Fragment>
             <div className="container">
                 <h3>Home page nest</h3>
-
-                {/* <div>
-                    <GooglePlacesAutocomplete
-                        apiKey="AIzaSyCuMJ3dhADqNoE4tGuWTI3_NlwBihj5BtE"
-                        selectProps={{
-                            value,
-                            onChange: handleValue,
-                            // onChange: setValue
-                        }}
-                    />
-                </div> */}
-
+                {JSON.stringify(pgs)}
+                <hr/>
                 <Search query={query} handleChange={handleChange} city={handleCitySearch} />
             </div>
         </Fragment>
