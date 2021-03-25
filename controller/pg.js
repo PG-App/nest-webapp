@@ -26,11 +26,6 @@ exports.create_pg_post = (req, res) => {
     res.send('Saved!');
 }
 
-exports.getAllPgsByCity = async (req, res) => {
-    const pgs = await Pg.find().select('location');
-    res.json({ pgs, size: pgs.length });
-}
-
 exports.search_pg_post = async (req, res) => {
     try {
         const { location } = req.query;
@@ -86,32 +81,6 @@ exports.update_pg = async (req, res) => {
     }
 }
 
-exports.searchPgByCity = async (req, res) => {
-    try {
-        const { cityName } = req.query;
-
-        const city = { $regex: cityName, $options: 'i' };
-
-        const pgs = await City.find({ 'cityName': city })
-            .populate('pg')
-            .select('cityName pg');
-
-        // const h = await pgs[0].pg;
-        // const oids = [];
-
-
-        // h.forEach(function (item) {
-        //     oids.push(new ObjectId(item));
-        // });
-
-        // const pgsByCity = await Pg.find({ _id: { $in: oids } });
-
-        res.json({ pgs });
-    } catch (error) {
-        return res.json({ error });
-    }
-}
-
 exports.getPgById = async (req, res) => {
     const { id } = req.params;
     const pg = await Pg.findById(id);
@@ -121,40 +90,57 @@ exports.getPgById = async (req, res) => {
 
 
 exports.applyFilter = async (req, res) => {
-    const { cityName } = req.body;
-    const locality = req.body.locality ? req.body.locality : '';
+    try {
+        console.log(req.body);
+        // res.send('ok');
 
-    const type = req.body.type ? req.body.type : '';
-    const bed = req.body.bed ? req.body.bed : '';
-    const ac = req.body.ac ? req.body.ac : '';
-    const minPrice = req.body.min ? req.body.min : 0;
-    const maxPrice = req.body.max ? req.body.max : 100000;
+        const gender = req.body.gender ? req.body.gender : '';
+        // const bed = req.body.bed ? req.body.bed : '';
+        const ac = req.body.ac ? req.body.ac : '';
+        const minPrice = req.body.min ? req.body.min : 0;
+        const maxPrice = req.body.max ? req.body.max : 100000;
 
-    let filter = {};
+        let filter = {};
 
-    if (locality) filter.locality = locality;
-    if (type) filter.type = type;
-    if (bed) filter.bed = bed;
-    if (ac) filter.ac = ac;
+        if (gender) filter.gender = gender;
 
-    filter.price = {
-        $gte: minPrice,
-        $lte: maxPrice
+        if (ac) filter.amenities = {
+            ac
+        };
+
+        // if (near_hospital) filter.amenities = {
+        //     near_hospital
+        // };
+        // if (wifi) filter.amenities = {
+        //     wifi
+        // };
+        // if (power_backup) filter.amenities = {
+        //     power_backup
+        // };
+        // if (room_cleaning_service) filter.amenities = {
+        //     room_cleaning_service
+        // };
+        // if (laundry) filter.amenities = {
+        //     laundry
+        // };
+        // if (water_cooler) filter.amenities = {
+        //     water_cooler
+        // };
+
+        filter.fee = {
+            $gte: minPrice,
+            $lte: maxPrice
+        }
+
+        console.log(filter);
+
+        const pgs = await Pg.find(filter);
+
+        res.json({
+            size: pgs.length,
+            pgs: pgs
+        });
+    } catch (err) {
+        console.log(err);
     }
-
-    console.log(filter);
-
-    const regexCity = { $regex: cityName, $options: 'i' };
-    const cityDetails = await City.find({ cityName: regexCity });
-
-    filter.cityName = cityDetails[0]._id;
-
-    const pgs = await Pg.find(filter);
-
-    res.json({
-        city: cityDetails[0].cityName,
-        size: pgs.length,
-        // cities: cityDetails,
-        pgs: pgs
-    });
 }

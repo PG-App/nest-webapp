@@ -28,7 +28,7 @@ const PgSchema = mongoose.Schema({
         breakfast: { type: Boolean, default: false },
         snack: { type: Boolean, default: false },
     },
-    fee: { type: Number },
+    fee: { type: Number, default: 0 },
     owner: {
         name: { type: String },
         phone_number: { type: Number }

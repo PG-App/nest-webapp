@@ -1,6 +1,15 @@
- POST  http://localhost:5000/api/hostels/search
- Content-Type: application/json
+#  POST  http://localhost:5000/api/hostels/search
+#  Content-Type: application/json
+
+# {
+#     "locality": "Bamunimoidam"
+# }
+
+POST http://localhost:5000/api/pgs/filter
+Content-Type: application/json
 
 {
-    "locality": "Bamunimoidam"
+    "gender": "Boys",
+    "ac": true,
+    "max": 5000
 }
