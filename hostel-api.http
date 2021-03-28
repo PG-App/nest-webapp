@@ -5,19 +5,18 @@
 #     "locality": "Bamunimoidam"
 # }
 
-# POST http://localhost:5000/api/pgs/filter
-# Content-Type: application/json
-
-# {
-#   "fee": [1000, 6000],
-#   "ac": "Yes"
-# }
-
-
-POST http://localhost:5000/api/add/pg
+POST http://localhost:5000/api/pgs/filter
 Content-Type: application/json
 
 {
-    "name": "Bhargab and Pratik's PG",
-    "location": "Bamunimaidan, Guwahati, Assam, India"
+    "gender": "Boys"
 }
+
+
+# POST http://localhost:5000/api/add/pg
+# Content-Type: application/json
+
+# {
+#     "name": "Pratik and his wife's PG",
+#     "location": "Dibrugarh University, Dibrugarh, Assam, India"
+# }

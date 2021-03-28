@@ -22,7 +22,7 @@ export const Search = ({ query, handleChange, city }) => {
     };
 
     const search = () => {
-        return history.push(`/hostels?location=${location}&latLng=${coordinates.lat},${coordinates.lng}`)
+        return history.push(`/pgs?location=${location}&latLng=${coordinates.lat},${coordinates.lng}`)
     }
 
     return (

@@ -88,57 +88,33 @@ exports.getPgById = async (req, res) => {
     return res.json(pg);
 }
 
-//Filter
-const handleGenderQuery = async (req, res, gender) => {
-    const pgs = await Pg.find({ 'gender': gender });
-
-    res.json({ size: pgs.length, pgs });
-};
-
-const handleACQuery = async (req, res, ac) => {
-    const pgs = await Pg.find({ 'amenties.ac': ac });
-
-    res.json({ size: pgs.length, pgs });
-};
-
-const handleFeeQuery = async (req, res, fee) => {
-    try {
-        let pgs = await Pg.find({
-            fee: {
-                $gte: fee[0],
-                $lte: fee[1],
-            },
-        });
-
-        res.json({ size: pgs.length, pgs });
-    } catch (err) {
-        console.log(err);
-    }
-};
-
 exports.applyFilter = async (req, res) => {
-    const {
-        gender,
-        ac,
-        fee
-    } = req.body;
+    let filter = {};
+    const gender = req.body.gender ? req.body.gender : '';
+    const amenities_ac = req.body.amenities_ac ? req.body.amenities_ac : '';
+    const amenities_laundry = req.body.amenities_laundry ? req.body.amenities_laundry : '';
+    const amenities_power_backup = req.body.amenities_power_backup ? req.body.amenities_power_backup : '';
+    const minPrice = req.body.min ? req.body.min : 0;
+    const maxPrice = req.body.max ? req.body.max : 100000;
 
-    console.log(req.body);
+    if (gender) filter.gender = gender;
+    if (amenities_ac) filter.amenities_ac = amenities_ac;
+    if (amenities_laundry) filter.amenities_laundry = amenities_laundry;
+    if (amenities_power_backup) filter.amenities_power_backup = amenities_power_backup;
+    // if (minPrice)
+    // filter.fee_range = {
+    //     min: { $gte: minPrice },
+    //     max: { $lte: maxPrice }
+    // };
 
-    if (gender) {
-        console.log("gender --->", gender);
-        await handleGenderQuery(req, res, gender);
-    }
+    filter = {...filter, 'fee_range.min': { $gte: minPrice }, 'fee_range.max': { $lte: maxPrice } };
+    // if (maxPrice)
+    // filter.fee_range = { $lte: maxPrice };
 
-    if (ac) {
-        console.log("ac --->", ac);
-        await handleACQuery(req, res, ac);
-    }
+    console.log(filter);
 
-    if (fee !== undefined) {
-        console.log("fee ---> ", fee);
-        await handleFeeQuery(req, res, fee);
-    }
+    const pgs = await Pg.find(filter);
+    res.json({ size: pgs.length, pgs });
 }
 
 exports.get_all_pgs = async (req, res) => {

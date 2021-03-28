@@ -6,7 +6,7 @@ import AdminRoute from './authentication/AdminRoute';
 import PrivateRoute from './authentication/PrivateRoute';
 import StepForm from './authentication/stepForm';
 import { Home } from './components/Home';
-import { Hostels } from './components/Hostels';
+import { PGs } from './components/PGs';
 import Navbar from './components/Navbar';
 import AdminDashboard from './user/AdminDashboard';
 import Dashboard from './user/UserDashboard';
@@ -22,7 +22,7 @@ const App = () => {
       <Navbar />
       <Switch>
         <Route exact path='/' component={Home} />
-        <Route exact path='/hostels' component={Hostels} />
+        <Route exact path='/pgs' component={PGs} />
         <Route exact path='/signup' component={StepForm} />
         <Route exact path='/signin' component={SigninStepForm} />
         <PrivateRoute exact path='/user/dashboard' component={Dashboard} />
