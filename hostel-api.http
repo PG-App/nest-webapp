@@ -5,11 +5,19 @@
 #     "locality": "Bamunimoidam"
 # }
 
-POST http://localhost:5000/api/pgs/filter
+# POST http://localhost:5000/api/pgs/filter
+# Content-Type: application/json
+
+# {
+#   "fee": [1000, 6000],
+#   "ac": "Yes"
+# }
+
+
+POST http://localhost:5000/api/add/pg
 Content-Type: application/json
 
 {
-    "gender": "Boys",
-    "ac": true,
-    "max": 5000
+    "name": "Manab's PG",
+    "location": "Dibrugarh University, Dibrugarh, Assam, India"
 }

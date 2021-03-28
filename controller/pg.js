@@ -88,59 +88,60 @@ exports.getPgById = async (req, res) => {
     return res.json(pg);
 }
 
+//Filter
+const handleGenderQuery = async (req, res, gender) => {
+    const pgs = await Pg.find({ 'gender': gender });
 
-exports.applyFilter = async (req, res) => {
+    res.json({ size: pgs.length, pgs });
+};
+
+const handleACQuery = async (req, res, ac) => {
+    const pgs = await Pg.find({ 'amenties.ac': ac });
+
+    res.json({ size: pgs.length, pgs });
+};
+
+const handleFeeQuery = async (req, res, fee) => {
     try {
-        console.log(req.body);
-        // res.send('ok');
-
-        const gender = req.body.gender ? req.body.gender : '';
-        // const bed = req.body.bed ? req.body.bed : '';
-        const ac = req.body.ac ? req.body.ac : '';
-        const minPrice = req.body.min ? req.body.min : 0;
-        const maxPrice = req.body.max ? req.body.max : 100000;
-
-        let filter = {};
-
-        if (gender) filter.gender = gender;
-
-        if (ac) filter.amenities = {
-            ac
-        };
-
-        // if (near_hospital) filter.amenities = {
-        //     near_hospital
-        // };
-        // if (wifi) filter.amenities = {
-        //     wifi
-        // };
-        // if (power_backup) filter.amenities = {
-        //     power_backup
-        // };
-        // if (room_cleaning_service) filter.amenities = {
-        //     room_cleaning_service
-        // };
-        // if (laundry) filter.amenities = {
-        //     laundry
-        // };
-        // if (water_cooler) filter.amenities = {
-        //     water_cooler
-        // };
-
-        filter.fee = {
-            $gte: minPrice,
-            $lte: maxPrice
-        }
-
-        console.log(filter);
-
-        const pgs = await Pg.find(filter);
-
-        res.json({
-            size: pgs.length,
-            pgs: pgs
+        let pgs = await Pg.find({
+            fee: {
+                $gte: fee[0],
+                $lte: fee[1],
+            },
         });
+
+        res.json({ size: pgs.length, pgs });
     } catch (err) {
         console.log(err);
     }
+};
+
+exports.applyFilter = async (req, res) => {
+    const {
+        gender,
+        ac,
+        fee
+    } = req.body;
+
+    console.log(req.body);
+
+    if (gender) {
+        console.log("gender --->", gender);
+        await handleGenderQuery(req, res, gender);
+    }
+
+    if (ac) {
+        console.log("ac --->", ac);
+        await handleACQuery(req, res, ac);
+    }
+
+    if (fee !== undefined) {
+        console.log("fee ---> ", fee);
+        await handleFeeQuery(req, res, fee);
+      }
+}
+
+exports.get_all_pgs = async (req, res) => {
+    const pgs = await Pg.find({}).select('name -_id');
+    res.json({ pgs, size: pgs.length });
 }

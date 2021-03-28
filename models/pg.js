@@ -5,11 +5,12 @@ const PgSchema = mongoose.Schema({
     location: {
         type: String
     },
+    coordinates: { type: String },
     gender: {
-        type: String
+        type: String, enum: ['Boys', 'Girls'], default: 'Boys'
     },
-    amenties: {
-        ac: { type: Boolean, default: false },
+    ameneties: {
+        ac: { type: String, enum: ["Yes", "No"], default: "No" },
         near_hospital: { type: Boolean, default: false },
         wifi: { type: Boolean, default: false },
         power_backup: { type: Boolean, default: false },
@@ -28,12 +29,12 @@ const PgSchema = mongoose.Schema({
         breakfast: { type: Boolean, default: false },
         snack: { type: Boolean, default: false },
     },
-    fee: { type: Number, default: 0 },
+    fee_range: { type: Number, default: 0 },
     owner: {
         name: { type: String },
         phone_number: { type: Number }
     },
-    default_image: { type: String },
+    default_image: { type: String, default: 'https://source.unsplash.com/1600x900/?mess,hostel' },
     images: [{
         type: String
     }]

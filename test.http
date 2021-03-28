@@ -7,20 +7,12 @@
 #     "feature_image": "https://firebasestorage.googleapis.com/v0/b/fb-express-d6a56.appspot.com/o/images%2Fme.jpg?alt=media&token=2337c3ea-6a1f-4564-8799-bb94f284657a"
 # }
 
-# POST  http://localhost:5000/api/add/city
-# Content-Type: application/json
+POST  http://localhost:5000/api/add/city
+Content-Type: application/json
 
-# {
-#     "cityName": "Dibrugarh"
-# }
-
-# POST http://localhost:5000/api/add/pg
-# Content-Type: application/json
-
-# {
-#     "name": "Manab and his wife's PG",
-#     "location": "Dibrugarh University, Dibrugarh, Assam, India"
-# }
+{
+    "cityName": "Dibrugarh"
+}
 
 # GET http://localhost:5000/api/pgs/search?location=Dibrugarh, Assam, India
 
