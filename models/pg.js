@@ -1,5 +1,24 @@
 const mongoose = require('mongoose');
 
+const BestDealSchema = mongoose.Schema({
+    //name, location, review, fee, image
+    pg: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'pg'
+    }
+});
+const BestDeal = mongoose.model('best_deals_pg', BestDealSchema);
+
+const RecommendedPgSchema = mongoose.Schema({
+    //name, location
+    pg: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'pg'
+    }
+});
+
+const RecommendedPg = mongoose.model('recommended_pg', RecommendedPgSchema);
+
 const PgSchema = mongoose.Schema({
     name: { type: String },
     location: {
@@ -15,11 +34,13 @@ const PgSchema = mongoose.Schema({
         near_park: { type: Boolean, default: false },
         near_gym: { type: Boolean, default: false },
         near_restaurant: { type: Boolean, default: false },
+        near_transport: { type: Boolean, default: false },
         wifi: { type: Boolean, default: false },
         power_backup: { type: Boolean, default: false },
         room_cleaning_service: { type: Boolean, default: false },
         laundry: { type: Boolean, default: false },
-        water_cooler: { type: Boolean, default: false }
+        water_cooler: { type: Boolean, default: false },
+        refrigerator: { type: Boolean, default: false }
     },
     occupancy: {
         single_bed: { type: Number, default: 0 },
@@ -49,25 +70,12 @@ const PgSchema = mongoose.Schema({
         star: { type: String },
         description: { type: String }
     },
+    recommended: { type: Boolean, default: false },
     comfort_index: { type: Number }
 });
 
-const RecommendedPgSchema = mongoose.Schema({
-    //name, location
-    pg: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'pg'
-    }
-});
+const Pg = mongoose.model('pg', PgSchema);
 
-const BestDealSchema = mongoose.Schema({
-    //name, location, review, fee, image
-    pg: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'pg'
-    }
-});
-
-module.exports = mongoose.model('pg', PgSchema);
-module.exports = mongoose.model('recommended_pg', RecommendedPgSchema);
-module.exports = mongoose.model('best_deals_pg', BestDealSchema);
+module.exports = {
+    Pg, BestDeal, RecommendedPg
+}

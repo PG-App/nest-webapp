@@ -1,4 +1,4 @@
-const Pg = require('../models/pg');
+const { Pg } = require('../models/pg');
 
 exports.create_pg_post = (req, res) => {
     const {
@@ -138,10 +138,18 @@ exports.applyFilter = async (req, res) => {
     if (fee !== undefined) {
         console.log("fee ---> ", fee);
         await handleFeeQuery(req, res, fee);
-      }
+    }
 }
 
 exports.get_all_pgs = async (req, res) => {
     const pgs = await Pg.find({}).select('name -_id');
     res.json({ pgs, size: pgs.length });
+}
+
+exports.showRecommendedPg = async (req, res) => {
+    const recommendedPgs = await Pg.find({ recommended: true }).select('location name');
+    res.json({
+        size: recommendedPgs.length,
+        recommendedPgs
+    });
 }
