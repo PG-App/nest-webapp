@@ -9,18 +9,19 @@ const UserSchema = mongoose.Schema({
         type: Number,
         required: true
     },
-    email: {
-        type: String,
-        // required: true,
-        unique: true
+    guardian_name: { type: String },
+    guardian_phone: { type: Number },
+    pg: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'pg'
     },
-    role: {
-        type: Number,
-        default: 0
-    },
-    password: {
-        type: String,
-        // required: true
+    review: {
+        pg_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'pg'
+        },
+        star: { type: String },
+        description: { type: String }
     }
 });
 

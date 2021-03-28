@@ -11,11 +11,11 @@ const OwnerSchema = mongoose.Schema({
         type: String
     },
     pg: [{
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'pg'
-    }], 
+    }],
     users: [{
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
     }],
     occupancy: {

@@ -12,6 +12,9 @@ const PgSchema = mongoose.Schema({
     ameneties: {
         ac: { type: String, enum: ["Yes", "No"], default: "No" },
         near_hospital: { type: Boolean, default: false },
+        near_park: { type: Boolean, default: false },
+        near_gym: { type: Boolean, default: false },
+        near_restaurant: { type: Boolean, default: false },
         wifi: { type: Boolean, default: false },
         power_backup: { type: Boolean, default: false },
         room_cleaning_service: { type: Boolean, default: false },
@@ -37,7 +40,34 @@ const PgSchema = mongoose.Schema({
     default_image: { type: String, default: 'https://source.unsplash.com/1600x900/?mess,hostel' },
     images: [{
         type: String
-    }]
+    }],
+    review: {
+        pg_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'pg'
+        },
+        star: { type: String },
+        description: { type: String }
+    },
+    comfort_index: { type: Number }
+});
+
+const RecommendedPgSchema = mongoose.Schema({
+    //name, location
+    pg: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'pg'
+    }
+});
+
+const BestDealSchema = mongoose.Schema({
+    //name, location, review, fee, image
+    pg: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'pg'
+    }
 });
 
 module.exports = mongoose.model('pg', PgSchema);
+module.exports = mongoose.model('recommended_pg', RecommendedPgSchema);
+module.exports = mongoose.model('best_deals_pg', BestDealSchema);
