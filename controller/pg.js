@@ -91,9 +91,20 @@ exports.getPgById = async (req, res) => {
 exports.applyFilter = async (req, res) => {
     let filter = {};
     const gender = req.body.gender ? req.body.gender : '';
+
+    //AMENITIES
     const amenities_ac = req.body.amenities_ac ? req.body.amenities_ac : '';
     const amenities_laundry = req.body.amenities_laundry ? req.body.amenities_laundry : '';
     const amenities_power_backup = req.body.amenities_power_backup ? req.body.amenities_power_backup : '';
+
+    //MESS 
+    const mess_veg = req.body.mess_veg ? req.body.mess_veg : '';
+    const mess_non_veg = req.body.mess_non_veg ? req.body.mess_non_veg : '';
+    const mess_breakfast = req.body.mess_breakfast ? req.body.mess_breakfast : '';
+    const mess_snack = req.body.mess_snack ? req.body.mess_snack : '';
+    
+
+    //PRICE
     const minPrice = req.body.min ? req.body.min : 0;
     const maxPrice = req.body.max ? req.body.max : 100000;
 
@@ -101,13 +112,19 @@ exports.applyFilter = async (req, res) => {
     if (amenities_ac) filter.amenities_ac = amenities_ac;
     if (amenities_laundry) filter.amenities_laundry = amenities_laundry;
     if (amenities_power_backup) filter.amenities_power_backup = amenities_power_backup;
+
+    if (mess_veg) filter.mess_veg = mess_veg;
+    if (mess_non_veg) filter.mess_non_veg = mess_non_veg;
+    if (mess_breakfast) filter.mess_breakfast = mess_breakfast;
+    if (mess_snack) filter.mess_snack = mess_snack;
+
     // if (minPrice)
     // filter.fee_range = {
     //     min: { $gte: minPrice },
     //     max: { $lte: maxPrice }
     // };
 
-    filter = { ...filter, 'fee_range.min': { $gte: minPrice }, 'fee_range.max': { $lte: maxPrice } };
+    // filter = { ...filter, 'fee_range.min': { $gte: minPrice }, 'fee_range.max': { $lte: maxPrice } };
     // if (maxPrice)
     // filter.fee_range = { $lte: maxPrice };
 

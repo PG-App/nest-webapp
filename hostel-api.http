@@ -5,18 +5,20 @@
 #     "locality": "Bamunimoidam"
 # }
 
-# POST http://localhost:5000/api/pgs/filter
-# Content-Type: application/json
-
-# {
-#     "gender": "Boys"
-# }
-
-
-POST http://localhost:5000/api/add/pg
+POST http://localhost:5000/api/pgs/filter
 Content-Type: application/json
 
 {
-    "name": "Pratik and his wife's PG",
-    "location": "Fancy Bazaar, Guwahati, Assam, India"
+    "gender": "Boys",
+    "amenities_ac": "No",
+    "mess_breakfast": "No"
 }
+
+
+# POST http://localhost:5000/api/add/pg
+# Content-Type: application/json
+
+# {
+#     "name": "Pratik and his wife's PG",
+#     "location": "Fancy Bazaar, Guwahati, Assam, India"
+# }
