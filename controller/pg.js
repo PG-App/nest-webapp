@@ -90,6 +90,11 @@ exports.getPgById = async (req, res) => {
 
 exports.applyFilter = async (req, res) => {
     let filter = {};
+    const { location } = req.query;
+    console.log(req.query);
+    filter = {
+        "location": { $regex: `${location}`, $options: 'i' }
+    };
     const gender = req.body.gender ? req.body.gender : '';
 
     //AMENITIES
@@ -102,7 +107,7 @@ exports.applyFilter = async (req, res) => {
     const mess_non_veg = req.body.mess_non_veg ? req.body.mess_non_veg : '';
     const mess_breakfast = req.body.mess_breakfast ? req.body.mess_breakfast : '';
     const mess_snack = req.body.mess_snack ? req.body.mess_snack : '';
-    
+
 
     //PRICE
     const minPrice = req.body.min ? req.body.min : 0;

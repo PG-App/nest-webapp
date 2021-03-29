@@ -31,6 +31,34 @@ export const PGs = (props) => {
 
     const queriedCity = props.location.search;
     const params = queryString.parse(queriedCity);
+    console.log(params.location);
+
+    useEffect(() => {
+        return axios.post(`http://localhost:5000/api/pgs/filter?location=${params.location}`, { gender })
+            .then(res => {
+                console.log(res.data);
+                setPgSize(res.data.size);
+                setPgs(res.data.pgs);
+            });
+    }, [gender]);
+
+    useEffect(() => {
+        return axios.post(`http://localhost:5000/api/pgs/filter?location=${params.location}`, { gender, amenities_ac: AC })
+            .then(res => {
+                console.log(res.data);
+                setPgSize(res.data.size);
+                setPgs(res.data.pgs);
+            });
+    }, [AC]);
+
+    useEffect(() => {
+        return axios.post(`http://localhost:5000/api/pgs/filter?location=${params.location}`, { gender, amenities_ac: AC, amenities_power_backup: powerBackup })
+            .then(res => {
+                console.log(res.data);
+                setPgSize(res.data.size);
+                setPgs(res.data.pgs);
+            });
+    }, [powerBackup]);
 
     useEffect(() => {
         setLoading(true);
@@ -50,33 +78,6 @@ export const PGs = (props) => {
             setLoading(false);
         });
     }, []);
-
-    useEffect(() => {
-        return axios.post(`http://localhost:5000/api/pgs/filter`, { gender })
-            .then(res => {
-                console.log(res.data);
-                setPgSize(res.data.size);
-                setPgs(res.data.pgs);
-            });
-    }, [gender]);
-
-    useEffect(() => {
-        return axios.post(`http://localhost:5000/api/pgs/filter`, { gender, amenities_ac: AC })
-            .then(res => {
-                console.log(res.data);
-                setPgSize(res.data.size);
-                setPgs(res.data.pgs);
-            });
-    }, [AC]);
-
-    useEffect(() => {
-        return axios.post(`http://localhost:5000/api/pgs/filter`, { gender, amenities_ac: AC, amenities_power_backup: powerBackup })
-            .then(res => {
-                console.log(res.data);
-                setPgSize(res.data.size);
-                setPgs(res.data.pgs);
-            });
-    }, [powerBackup]);
 
     const showLoading = () => {
         if (loading) {
@@ -210,17 +211,20 @@ export const PGs = (props) => {
                     </div> */}
                 </div>
 
-                {pgs.length < 0 &&
+                {gender === '' && AC === '' && powerBackup === '' ?
                     <div>
                         <h3>
                             {normalPgs.length}
                         </h3>
                         {JSON.stringify(normalPgs)}
                     </div>
+                    :
+                    <div>
+                        <h3>{pgs.length}</h3> <br />
+                        {pgs && JSON.stringify(pgs)}
+                    </div>
                 }
 
-                <h3>{pgs.length}</h3> <br />
-                {pgs && JSON.stringify(pgs)}
 
             </div>
 

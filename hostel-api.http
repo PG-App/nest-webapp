@@ -5,13 +5,12 @@
 #     "locality": "Bamunimoidam"
 # }
 
-POST http://localhost:5000/api/pgs/filter
+POST http://localhost:5000/api/pgs/filter?location=Guwahati, Assam, India
 Content-Type: application/json
 
 {
     "gender": "Boys",
-    "amenities_ac": "No",
-    "mess_breakfast": "No"
+    "amenities_ac": "Yes"
 }
 
 
