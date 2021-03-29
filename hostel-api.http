@@ -9,8 +9,8 @@ POST http://localhost:5000/api/pgs/filter?location=Guwahati, Assam, India
 Content-Type: application/json
 
 {
-    "gender": "Boys",
-    "amenities_ac": "Yes"
+    "single_bed": "0",
+    "triple_bed": "0"
 }
 
 

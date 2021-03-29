@@ -108,6 +108,11 @@ exports.applyFilter = async (req, res) => {
     const mess_breakfast = req.body.mess_breakfast ? req.body.mess_breakfast : '';
     const mess_snack = req.body.mess_snack ? req.body.mess_snack : '';
 
+    //OCCUPANCY
+    const single_bed = req.body.single_bed ? req.body.single_bed : '';
+    const double_bed = req.body.double_bed ? req.body.double_bed : '';
+    const triple_bed = req.body.triple_bed ? req.body.triple_bed : '';
+
 
     //PRICE
     const minPrice = req.body.min ? req.body.min : 0;
@@ -122,6 +127,10 @@ exports.applyFilter = async (req, res) => {
     if (mess_non_veg) filter.mess_non_veg = mess_non_veg;
     if (mess_breakfast) filter.mess_breakfast = mess_breakfast;
     if (mess_snack) filter.mess_snack = mess_snack;
+
+    if (single_bed && single_bed !== "0") filter.single_bed = { $gt: 0 };
+    if (double_bed && double_bed !== "0") filter.double_bed = { $gt: 0 };
+    if (triple_bed && triple_bed !== "0") filter.triple_bed = { $gt: 0 };
 
     // if (minPrice)
     // filter.fee_range = {
