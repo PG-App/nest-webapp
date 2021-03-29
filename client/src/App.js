@@ -15,6 +15,7 @@ import { CreateHostel } from './admin/CreateHostel';
 import { HostelForm } from './admin/HostelForm';
 import { NotFound } from './404/NotFound';
 import SigninStepForm from './authentication/signin/SigninStepForm';
+import { PGDetail } from './components/PGDetail';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
       <Switch>
         <Route exact path='/' component={Home} />
         <Route exact path='/pgs' component={PGs} />
+        <Route exact path='/pgs/details/:pg_id' component={PGDetail} />
         <Route exact path='/signup' component={StepForm} />
         <Route exact path='/signin' component={SigninStepForm} />
         <PrivateRoute exact path='/user/dashboard' component={Dashboard} />

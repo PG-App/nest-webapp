@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 
-const {  create_pg_post, search_pg_post, add_pg, applyFilter, get_all_pgs, showRecommendedPg } = require('../controller/pg');
+const {  create_pg_post, search_pg_post, add_pg, applyFilter, get_all_pgs, showRecommendedPg, showPopularLocalities, showPgById } = require('../controller/pg');
 
 router.post('/add/pgs', create_pg_post);
 
@@ -13,6 +13,8 @@ router.get('/pgs/filter', (req, res) => res.send('Bhargab'));
 router.post('/pgs/filter', applyFilter);
 //Recommended PGs to show
 router.get('/pgs/recommended', showRecommendedPg);
+router.get('/pgs/popular-localities', showPopularLocalities);
+router.get('/pg/:pg_id', showPgById);
 
 router.post('/add/pg', add_pg);
 

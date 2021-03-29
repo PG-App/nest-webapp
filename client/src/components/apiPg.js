@@ -20,3 +20,16 @@ export const fetchRecommendedPgs = () => {
             return res.data;
         });
 }
+
+export const fetchPopularLocalitiesPgs = () => {
+    return axios.get('http://localhost:5000/api/pgs/popular-localities')
+        .then(res => {
+            return res.data;
+        });
+}
+
+export const fecthPgDetailsById = (id) => {
+    return axios.get(`http://localhost:5000/api/pg/${id}`).then(res => {
+        return res.data;
+    })
+}

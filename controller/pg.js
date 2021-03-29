@@ -107,7 +107,7 @@ exports.applyFilter = async (req, res) => {
     //     max: { $lte: maxPrice }
     // };
 
-    filter = {...filter, 'fee_range.min': { $gte: minPrice }, 'fee_range.max': { $lte: maxPrice } };
+    filter = { ...filter, 'fee_range.min': { $gte: minPrice }, 'fee_range.max': { $lte: maxPrice } };
     // if (maxPrice)
     // filter.fee_range = { $lte: maxPrice };
 
@@ -123,9 +123,30 @@ exports.get_all_pgs = async (req, res) => {
 }
 
 exports.showRecommendedPg = async (req, res) => {
-    const recommendedPgs = await Pg.find({ recommended: true }).select('location name');
-    res.json({
-        size: recommendedPgs.length,
-        recommendedPgs
-    });
+    try {
+        const recommendedPgs = await Pg.find({ recommended: true }).select('location name');
+        res.json({
+            size: recommendedPgs.length,
+            recommendedPgs
+        });
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+exports.showPopularLocalities = async (req, res) => {
+    try {
+        const popularLocalitiesPgs = await Pg.find({}).select('location name').limit(5);
+        res.json({
+            size: popularLocalitiesPgs.length,
+            popularLocalitiesPgs
+        });
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+exports.showPgById = async (req, res) => {
+    const pg = await Pg.findById({ _id: req.params.pg_id });
+    res.json({ pg });
 }

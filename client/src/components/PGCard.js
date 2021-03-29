@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 
-export const HostelCard = ({ pgs }) => {
+export const PGCard = ({ pgs }) => {
     return (
         <Fragment>
             <h2>You are searching in {pgs.city}...</h2>

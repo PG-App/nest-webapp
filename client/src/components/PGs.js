@@ -3,15 +3,16 @@ import queryString from 'query-string';
 import { CircularProgress, makeStyles } from '@material-ui/core';
 
 import { fetchAllPgs, fetchPgsByLocation } from './apiPg';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      display: 'flex',
-      '& > * + *': {
-        marginLeft: theme.spacing(2),
-      },
+        display: 'flex',
+        '& > * + *': {
+            marginLeft: theme.spacing(2),
+        },
     },
-  }));
+}));
 
 export const PGs = (props) => {
     const classes = useStyles();
@@ -56,7 +57,15 @@ export const PGs = (props) => {
                 <h3>PGs page nest</h3>
                 {showLoading()}
 
-                {pgs && JSON.stringify(pgs)}
+                {/* {pgs && JSON.stringify(pgs)} */}
+                {pgs &&
+                    pgs.map(pg => (
+                        <Fragment>
+                            <Link to={`/pgs/details/${pg._id}`} >To Details Page</Link>
+                            <hr />
+                        </Fragment>
+                    ))
+                }
 
             </div>
 
