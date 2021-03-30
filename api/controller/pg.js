@@ -1,4 +1,5 @@
 const { Pg } = require('../models/pg');
+const { cloudinary } = require('../utils/cloudinary');
 
 exports.create_pg_post = async (req, res) => {
     try {
@@ -49,6 +50,11 @@ exports.add_pg = async (req, res) => {
             name,
             location,
         });
+        const fileStr = req.body.data;
+        const uploadResponse = await cloudinary.uploader.upload(fileStr, {
+            upload_preset: 'ml_default',
+        });
+        const newPg = new Pg(req.body);
         await newPg.save();
 
         res.json({ success: 'Pg created successfully! NEW!' });
@@ -117,7 +123,15 @@ exports.applyFilter = async (req, res) => {
     if (double_bed && double_bed !== "0") filter.double_bed = { $gt: 0 };
     if (triple_bed && triple_bed !== "0") filter.triple_bed = { $gt: 0 };
 
-    filter = { ...filter, 'fee_min': { $gte: minPrice }, 'fee_max': { $lte: maxPrice } };
+    // if (minPrice)
+    // filter.fee_range = {
+    //     min: { $gte: minPrice },
+    //     max: { $lte: maxPrice }
+    // };
+
+    // filter = { ...filter, 'fee_range.min': { $gte: minPrice }, 'fee_range.max': { $lte: maxPrice } };
+    // if (maxPrice)
+    // filter.fee_range = { $lte: maxPrice };
 
     console.log(filter);
 

@@ -1,0 +1,32 @@
+#  POST  http://localhost:5000/api/hostels/search
+#  Content-Type: application/json
+
+# {
+#     "locality": "Bamunimoidam"
+# }
+
+# POST http://localhost:5000/api/pgs/filter?location=Guwahati, Assam, India
+# Content-Type: application/json
+
+# {
+#     "single_bed": "0",
+#     "triple_bed": "0"
+# }
+
+
+# POST http://localhost:5000/api/add/pg
+# Content-Type: application/json
+
+# {
+#     "name": "Pratik and his wife's PG",
+#     "location": "Fancy Bazaar, Guwahati, Assam, India"
+# }
+
+
+POST https://lodger-app.herokuapp.com/api/add/pg
+Content-Type: application/json
+
+{
+    "name": "Bhargab and his wife's PG",
+    "location": "Jorhat, Assam, India"
+}

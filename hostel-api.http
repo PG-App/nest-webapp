@@ -5,12 +5,11 @@
 #     "locality": "Bamunimoidam"
 # }
 
-POST http://localhost:5000/api/pgs/filter?location=Guwahati, Assam, India
+POST http://localhost:5000/api/pgs/filter?location=Lakhimpur, Assam, India
 Content-Type: application/json
 
 {
-    "single_bed": "0",
-    "triple_bed": "0"
+    "min": 1000
 }
 
 
@@ -19,5 +18,5 @@ Content-Type: application/json
 
 # {
 #     "name": "Pratik and his wife's PG",
-#     "location": "Fancy Bazaar, Guwahati, Assam, India"
+#     "location": "Lakhimpur, Assam, India"
 # }

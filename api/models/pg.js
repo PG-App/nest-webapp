@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const BestDealSchema = mongoose.Schema({
-    //name, location, review, fee, image
+    // name, location, review, fee, image
     pg: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'pg'
@@ -10,7 +10,7 @@ const BestDealSchema = mongoose.Schema({
 const BestDeal = mongoose.model('best_deals_pg', BestDealSchema);
 
 const RecommendedPgSchema = mongoose.Schema({
-    //name, location
+    // name, location
     pg: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'pg'
@@ -47,14 +47,20 @@ const PgSchema = mongoose.Schema({
     mess_breakfast: { type: String, default: "No" },
     mess_snack: { type: String, default: "No" },
 
+    // fee_range:// { type: Number, default: 0 }, // [5000, 8000]
+    // {
+    //     min: { type: Number, default: 0 },
+    //     max: { type: Number, default: 100000 },
+    // },
     fee_min: { type: Number, default: 0 },
     fee_max: { type: Number, default: 100000 },
-
+    
     owner_name: { type: String },
     owner_phone_number: { type: Number },
 
     default_image: { type: String, default: 'https://source.unsplash.com/1600x900/?mess,hostel' },
     images: [{ type: String }],
+    data: { type: String },
     review: {
         pg_id: {
             type: mongoose.Schema.Types.ObjectId,
