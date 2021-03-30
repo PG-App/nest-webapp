@@ -1,26 +1,17 @@
 const { Pg } = require('../models/pg');
 
 exports.create_pg_post = (req, res) => {
-    const {
-        cityName,
-        pgName,
-        pincode,
-        type,
-        bed,
-        ac,
-        price
-    } = req.body;
+    // const {
+    //     cityName,
+    //     pgName,
+    //     pincode,
+    //     type,
+    //     bed,
+    //     ac,
+    //     price
+    // } = req.body;
 
-    const newPg = new Pg({
-        cityName,
-        pg: [{
-            pgName,
-            type,
-            pincode,
-            bed,
-            ac
-        }]
-    });
+    const newPg = new Pg(req.body);
 
     newPg.save();
     res.send('Saved!');

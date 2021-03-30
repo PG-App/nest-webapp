@@ -156,18 +156,24 @@ export const PGs = (props) => {
         // console.log(event.target);
         if (event.target.checked) {
             setSingleBed(event.target.value);
+        } else {
+            setSingleBed('0');
         }
     }
 
     const handleDBed = event => {
         if (event.target.checked) {
             setDoubleBed(event.target.value);
+        } else {
+            setDoubleBed('0');
         }
     }
 
     const handleTBed = event => {
         if (event.target.checked) {
             setTripleBed(event.target.value);
+        } else {
+            setTripleBed('0');
         }
     }
 
@@ -192,6 +198,10 @@ export const PGs = (props) => {
         }
     }
 
+    const getGenderBuytton = () => {
+        console.log(document.getElementById('radio-gender'));
+    }
+
     return (
         <Fragment>
             <div className="container">
@@ -206,33 +216,37 @@ export const PGs = (props) => {
                         >
                             Clear filter
                         </button>
-                        <div className="form-check">
-                            <input
-                                name='gender'
-                                className="form-check-input"
-                                type="radio"
-                                value="Boys"
-                                onChange={handleChange}
-                                onClick={checkAvailability}
-                            // checked={checked.boy}
-                            />
-                            <label className="form-check-label">
-                                Boys
-                            </label>
-                        </div>
 
-                        <div className="form-check">
-                            <input
-                                name='gender'
-                                className="form-check-input"
-                                type="radio"
-                                value="Girls"
-                                onChange={handleChange}
-                            // checked={checked.girl}
-                            />
-                            <label className="form-check-label">
-                                Girls
+                        <div id='radio-gender' onChange={handleChange} onClick={getGenderBuytton}>
+                            <div className="form-check">
+                                <input
+                                    name='gender'
+                                    className="form-check-input"
+                                    type="radio"
+                                    value="Boys"
+                                    // onChange={handleChange}
+                                    onClick={checkAvailability}
+                                    checked={gender === 'Boys'}
+                                />
+                                <label className="form-check-label">
+                                    Boys
                             </label>
+                            </div>
+
+                            <div className="form-check">
+                                <input
+                                    name='gender'
+                                    className="form-check-input"
+                                    type="radio"
+                                    value="Girls"
+                                    // onChange={handleChange}
+                                    checked={gender === "Girls"}
+                                />
+                                <label className="form-check-label">
+                                    Girls
+                            </label>
+                            </div>
+
                         </div>
 
                         <hr />
@@ -336,7 +350,7 @@ export const PGs = (props) => {
                             </label>
                     </div>
 
-                    {/* <div className="col-6 col-md-8">
+                    <div className="col-6 col-md-8">
                         {pgs &&
                             pgs.map(pg => (
                                 <Fragment>
@@ -345,7 +359,7 @@ export const PGs = (props) => {
                                 </Fragment>
                             ))
                         }
-                    </div> */}
+                    </div>
                 </div>
 
                 {gender === '' && AC === '' && powerBackup === '' && singleBed === 0 ?
