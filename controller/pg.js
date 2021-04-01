@@ -118,9 +118,9 @@ exports.applyFilter = async (req, res) => {
     if (double_bed && double_bed !== "0") filter.double_bed = { $gt: 0 };
     if (triple_bed && triple_bed !== "0") filter.triple_bed = { $gt: 0 };
 
-    // filter = { ...filter, 'fee_min': { $gte: minPrice }, 'fee_max': { $lte: maxPrice } };
+    // filter = { ...filter, fee_min: { $gte: minPrice }, fee_max: { $lte: maxPrice } };
 
-    filter = { ...filter, 'fee_min': { $lte: maxPrice }, 'fee_max': { $gte: minPrice } };
+    filter = { ...filter, fee_min: { $lte: maxPrice }, fee_max: { $gte: minPrice } };
 
     console.log(filter);
 
