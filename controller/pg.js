@@ -98,7 +98,6 @@ exports.applyFilter = async (req, res) => {
     const double_bed = req.body.double_bed ? req.body.double_bed : '';
     const triple_bed = req.body.triple_bed ? req.body.triple_bed : '';
 
-
     //PRICE
     const minPrice = req.body.min ? req.body.min : 0;
     const maxPrice = req.body.max ? req.body.max : 100000;
@@ -108,16 +107,20 @@ exports.applyFilter = async (req, res) => {
     if (amenities_laundry) filter.amenities_laundry = amenities_laundry;
     if (amenities_power_backup) filter.amenities_power_backup = amenities_power_backup;
 
+    // MESS
     if (mess_veg) filter.mess_veg = mess_veg;
     if (mess_non_veg) filter.mess_non_veg = mess_non_veg;
     if (mess_breakfast) filter.mess_breakfast = mess_breakfast;
     if (mess_snack) filter.mess_snack = mess_snack;
 
+    // BED
     if (single_bed && single_bed !== "0") filter.single_bed = { $gt: 0 };
     if (double_bed && double_bed !== "0") filter.double_bed = { $gt: 0 };
     if (triple_bed && triple_bed !== "0") filter.triple_bed = { $gt: 0 };
 
-    filter = { ...filter, 'fee_min': { $gte: minPrice }, 'fee_max': { $lte: maxPrice } };
+    // filter = { ...filter, 'fee_min': { $gte: minPrice }, 'fee_max': { $lte: maxPrice } };
+
+    filter = { ...filter, 'fee_min': { $lte: maxPrice }, 'fee_max': { $gte: minPrice } };
 
     console.log(filter);
 

@@ -23,17 +23,18 @@ export const PGs = (props) => {
     const [pgs, setPgs] = useState('');
     const [pgSize, setPgSize] = useState(0);
     const [loading, setLoading] = useState(false);
-
     const [checked, setChecked] = useState({
         boy: false,
         girl: false,
-    });
+    });    
     const [gender, setGender] = useState('');
     const [AC, setAC] = useState('');
     const [powerBackup, setPowerBackup] = useState('');
     const [singleBed, setSingleBed] = useState('0');
     const [doubleBed, setDoubleBed] = useState('0');
     const [tripleBed, setTripleBed] = useState('0');
+    const [minPrice, setMinPrice] = useState('0');
+    const [maxPrice, setMaxPrice] = useState('100000');
 
     const queriedCity = props.location.search;
     const params = queryString.parse(queriedCity);
@@ -105,6 +106,41 @@ export const PGs = (props) => {
                 setPgs(res.data.pgs);
             });
     }, [tripleBed]);
+
+    useEffect(() => {
+        return axios.post(`http://localhost:5000/api/pgs/filter?location=${params.location}`, {
+            gender,
+            amenities_ac: AC,
+            amenities_power_backup: powerBackup,
+            single_bed: singleBed,
+            double_bed: doubleBed,
+            triple_bed: tripleBed,
+            min: minPrice
+        })
+            .then(res => {
+                console.log(res.data);
+                setPgSize(res.data.size);
+                setPgs(res.data.pgs);
+            });
+    }, [minPrice]);
+
+    useEffect(() => {
+        return axios.post(`http://localhost:5000/api/pgs/filter?location=${params.location}`, {
+            gender,
+            amenities_ac: AC,
+            amenities_power_backup: powerBackup,
+            single_bed: singleBed,
+            double_bed: doubleBed,
+            triple_bed: tripleBed,
+            min: minPrice,
+            max: maxPrice
+        })
+            .then(res => {
+                console.log(res.data);
+                setPgSize(res.data.size);
+                setPgs(res.data.pgs);
+            });
+    }, [maxPrice]);
 
     useEffect(() => {
         setLoading(true);
@@ -186,6 +222,8 @@ export const PGs = (props) => {
         setSingleBed('0');
         setDoubleBed('0');
         setTripleBed('0');
+        setMinPrice('0');
+        setMaxPrice('100000');
         // console.log(e.target);
     }
 
@@ -200,6 +238,16 @@ export const PGs = (props) => {
 
     const getGenderBuytton = () => {
         console.log(document.getElementById('radio-gender'));
+    }
+
+    const handleMinPrice = e => {
+        console.log(e.target.value);
+        setMinPrice(e.target.value);
+    }
+
+    const handleMaxPrice = e => {
+        console.log(e.target.value);
+        setMaxPrice(e.target.value);
     }
 
     return (
@@ -310,7 +358,6 @@ export const PGs = (props) => {
 
                     <div className="form-check">
                         <input
-                            // name='powerBackup'
                             className="form-check-input"
                             type="checkbox"
                             value="Yes"
@@ -324,7 +371,6 @@ export const PGs = (props) => {
                     <hr />
                     <div className="form-check">
                         <input
-                            // name='powerBackup'
                             className="form-check-input"
                             type="checkbox"
                             value="Yes"
@@ -332,7 +378,7 @@ export const PGs = (props) => {
                         />
                         <label className="form-check-label">
                             Double Bed
-                            </label>
+                        </label>
                     </div>
 
                     <hr />
@@ -340,15 +386,38 @@ export const PGs = (props) => {
                     <div className="form-check">
                         <input
                             name='powerBackup'
-                            className="form-check-input"
                             type="checkbox"
                             value="Yes"
                             onChange={handleTBed}
                         />
                         <label className="form-check-label">
                             Triple Bed
-                            </label>
+                        </label>
                     </div>
+
+                    <hr />
+
+                    <div>
+                        <select className="form-select" name={minPrice} onChange={handleMinPrice}>
+                            <option selected value='0'>Please select any minimum price</option>
+                            <option value="1000">1000</option>
+                            <option value="2000">2000</option>
+                            <option value="3000">3000</option>
+                        </select>
+                    </div>
+
+                    <hr />
+
+                    <div>
+                        <select className="form-select" name={maxPrice} onChange={handleMaxPrice}>
+                            <option selected value='100000'>Please select any maxmimum price</option>
+                            <option value="10000">10000</option>
+                            <option value="11000">11000</option>
+                            <option value="12000">12000</option>
+                        </select>
+                    </div>
+
+                    <hr/>
 
                     <div className="col-6 col-md-8">
                         {pgs &&
@@ -360,6 +429,7 @@ export const PGs = (props) => {
                             ))
                         }
                     </div>
+
                 </div>
 
                 {gender === '' && AC === '' && powerBackup === '' && singleBed === 0 ?

@@ -44,10 +44,15 @@ export const Home = () => {
         });
     }, []);
 
+    const handleInput = e => {
+        console.log(e.target.max);
+    }
+
     return (
         <Fragment>
             <div className="container">
                 <h3>Home page nest</h3>
+
                 <Search query={query} handleChange={handleChange} city={handleCitySearch} />
                 <hr />
                 <RecommendedPg recommendedPgs={recommendedPgs} />
