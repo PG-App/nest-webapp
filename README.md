@@ -11,3 +11,5 @@ Command to run app locally
 `cd ..`
 
 `npm run dev`
+
+test
